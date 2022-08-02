@@ -1,0 +1,21 @@
+
+spring.application.name=eureka-server
+
+server.port=8025
+# logging \u914D\u7F6E
+#logging.config=classpath:log4j2.xml
+
+
+
+#\u8FD0\u884C\u73AF\u5883
+eureka.environment=dev
+
+eureka.instance.hostname=127.0.0.1
+#\u7531\u4E8E\u8BE5\u5E94\u7528\u662F\u6CE8\u518C\u4E2D\u5FC3\uFF0Cfalse\uFF1A\u4EE3\u8868\u4E0D\u5411\u6CE8\u518C\u4E2D\u5FC3\u6CE8\u518C\u81EA\u5DF1;true:\u4EE3\u8868\u6CE8\u518C\u81EA\u5DF1\u3002\u591A\u8282\u70B9\u65F6\u6253\u5F00
+eureka.client.register-with-eureka=false
+#\u662F\u5426\u542F\u52A8\u68C0\u6D4B\u670D\u52A1\uFF0C\u8868\u793A\u8868\u793A\u662F\u5426\u4ECEEurekaServer\u83B7\u53D6\u6CE8\u518C\u4FE1\u606F\uFF0C\u9ED8\u8BA4\u4E3Atrue\u3002\u5355\u8282\u70B9\u4E0D\u9700\u8981\u540C\u6B65\u5176\u4ED6\u7684EurekaServer\u8282\u70B9\u7684\u6570\u636E
+eureka.client.fetch-registry=false
+#\u6CE8\u518C\u5730\u5740 \u591A\u8282\u70B9\u7528,\u5206\u9694
+eureka.client.service-url.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/
+#\u662F\u5426\u5F00\u542F\u4FDD\u62A4\u6A21\u5F0F \u6D4B\u8BD5\u65F6\uFF0C\u9700\u8981\u5173\u95ED\uFF0C\u7EBF\u4E0A\u6253\u5F00
+eureka.server.enable-self-preservation=false

@@ -1,0 +1,41 @@
+server:
+  port: 8004
+
+spring:
+  application:
+    name: cloud-provider-payment #入驻到zookeeper中的名字
+
+  datasource:
+    #当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #mysql驱动包
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ezgo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: 123456
+  # zookeeper的相关配置信息
+  cloud:
+    zookeeper:
+      # zookeeper的ip + 端口号
+      #集群的方式
+      connect-string: zookeeper1:2281,zookeeper1:2282,zookeeper1:2283
+
+
+
+#配置
+mybatis-plus:
+  #mapper位置
+  mapper-locations: classpath:com.payment.mapper/*Mapper.xml
+  #别名
+  type-aliases-package: com.payment.entity
+
+#  configuration:
+#    #控制台日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#配置日志相关信息
+logging:
+  config: D:/IDEAWorkSpace/ezgo/prodiver-payment-8001/src/main/resources/logback.xml
+
+
+

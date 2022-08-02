@@ -1,0 +1,71 @@
+server:
+  port: 1001
+
+spring:
+  application:
+    name: spring-cloud-gateway
+  #gateway网关配置
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名进行注册
+      routes:
+        - id: getServerPort1 #路由的id，没有固定的规则但是要求唯一，建议配合服务名
+          uri: http://localhost:8001 #匹配后提供服务的路由地址
+          # uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/redundant/gateway/getServer1/** # 断言，路径相匹配的进行路由
+          filters:
+            # 网关外访问路径为/redundant/gateway/getServer1/**，但是经过网关后会去除第一个路径
+            # 变为/gateway/getServer1/**
+            # 1代表去除一个路径
+            - StripPrefix=1
+
+        - id: getServerPort2
+          uri: http://localhost:8001
+          # uri: lb://cloud-payment-service #匹配后提供服务的路由地址
+          predicates:
+            - Path=/gateway/getServer2/**
+            # 在2022/08/01 23:52:20.517之后开始生效
+            # - After=2022-08-01T23:52:20.517+08:00[Asia/Shanghai]
+
+            # 在2022/08/01 23:52:20.517之前开始生效
+            # - Before=2022-08-01T23:52:20.517+08:00[Asia/Shanghai]
+
+            # 在2022/08/01 22:52:20.517之后2022/08/01 23:52:20.517之前生效
+            # - Between=2022-08-01T22:52:20.517+08:00[Asia/Shanghai],2022-08-01T23:52:20.517+08:00[Asia/Shanghai]
+
+            # username -> cookie名称，zzzq -> 正则表达式
+            # 通过Cookie name和正则表达式去匹配，如果匹配上则执行，否则不执行
+            # - Cookie=username,zzzq
+
+            # X-Request-Id -> 属性名称，\d+ -> 正则表达式
+            # 通过属性名称和正则表达式去匹配，如果匹配上则执行，否则不执行
+            # 请求头要有X-Request-Id属性并且值为正数的正则表达式
+            # - Header=X-Request-Id,\d+
+
+            # 接收一组匹配域名的列表，用.号作为分隔符。它通过参数中的主机地址作为匹配规则
+            # - Host=**.gateway.com
+
+            # 只能通过GET方式进行请求
+            # - Method=GET
+
+            # username -> 参数名，\d+ -> 属性值的正则表达式
+            # 要有参数username，并且值为正数才能路由
+            # - Query=username,\d+
+
+eureka:
+  client:
+    #表示是否将自己注册进EurekaServer
+    register-with-eureka: true
+    #是否从EurekaServer抓取已有的注册信息，集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      #单机版
+      defaultZone: http://localhost:7001/eureka
+      #集群版
+      # defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    hostname: spring-cloud-gateway-service
+

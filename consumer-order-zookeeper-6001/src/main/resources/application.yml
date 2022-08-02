@@ -1,0 +1,12 @@
+server:
+  port: 6001
+spring:
+  application:
+    name: cloud-consumer-order
+  cloud:
+    # 注册到zookeepr地址
+    zookeeper:
+      #单机
+      #connect-string: zookeeper1:2181
+      #集群
+      connect-string: zookeeper1:2281,zookeeper1:2282,zookeeper1:2283

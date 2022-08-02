@@ -1,0 +1,18 @@
+server:
+  port: 6002
+
+spring:
+  application:
+    name: cloud-consul-order
+  #consul注册中心
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        #hostname：127.0.0.1
+        service-name: ${spring.application.name}
+        # 添加这两句话防止consul控制台检查出错
+        prefer-ip-address: true
+        heartbeat:
+          enabled: true
