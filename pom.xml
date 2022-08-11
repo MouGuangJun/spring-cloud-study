@@ -29,6 +29,9 @@
         <module>consumer-hystrix-order-6004</module>
         <module>consumer-hystrix-dashboard-9002</module>
         <module>spring-cloud-gateway1001</module>
+        <module>cloud-config-server-2001</module>
+        <module>cloud-config-client-2002</module>
+        <module>cloud-config-client-2003</module>
     </modules>
     <!--父工程用pom的方式打包-->
     <packaging>pom</packaging>

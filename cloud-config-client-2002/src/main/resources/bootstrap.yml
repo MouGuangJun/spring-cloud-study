@@ -1,0 +1,39 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: cloud-config-client
+  cloud:
+    config:
+      label: master #分支
+      name: config #配置文件-系统名，config-dev.yml中的config
+      profile: dev #配置文件-环境名，config-dev.yml中的yml
+      uri: http://config-2001.com:2001 #配置中心地址uri
+
+  #rabbitmq相关配置
+  rabbitmq:
+    host: rabbitmq1
+    port: 5672
+    username: guest
+    password: guest
+
+# eureka配置
+eureka:
+  client:
+    #表示是否将自己注册进EurekaServer
+    register-with-eureka: true
+    #是否从EurekaServer抓取已有的注册信息，集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      #单机版
+      defaultZone: http://localhost:7001/eureka
+      #集群版
+      # defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
