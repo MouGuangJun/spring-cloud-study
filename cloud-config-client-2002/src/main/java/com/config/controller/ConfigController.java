@@ -14,8 +14,16 @@ public class ConfigController {
     @Value("${datasource.driver}")
     private String datasourceDriver;
 
+    @Value("${web.gateway.blacklist}")
+    private String blackList;
+
     @GetMapping("/getDatasourceDriver")
     public String getDatasourceDriver() {
         return "server.port=" + serverPort + ", " + datasourceDriver;
+    }
+
+    @GetMapping("/getBlackList")
+    public String getBlackList() {
+        return "blackList is: " + blackList;
     }
 }
