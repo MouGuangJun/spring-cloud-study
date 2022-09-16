@@ -1,0 +1,64 @@
+# compose的版本号
+version: "3"
+# 所有的docker容器
+services:
+  ##### 自己的微服务 #####
+  docker-compose:
+    # 镜像名称
+    image: docker-compose:1.0.0
+    # 容器名称
+    container_name: docker-compose-file
+    # 端口映射
+    ports:
+      - "9099:9099"
+    # 容器卷
+    volumes:
+      - /local/compose/app/data:/data
+    # 网络配置
+    networks:
+      - compose-net
+    # 依赖于哪些容器
+    depends_on:
+      - redis
+      - mysql
+
+  ##### redis #####
+  # 没有配置容器名称的话，会自动加前后缀，如在compose目录下，那么就是compose_redis_1
+  redis:
+    image: redis:6.0.8
+    container_name: redis-compose
+    ports:
+      - "6379:6379"
+    volumes:
+      - /local/compose/redis/redis.conf:/etc/redis/redis.conf
+      - /local/compose/redis/data:/data
+    networks:
+      - compose-net
+    # 启动命令
+    command: redis-server /etc/redis/redis.conf
+
+  ##### mysql #####
+  mysql:
+    image: mysql
+    container_name: mysql-compose
+    # MYSQL环境信息，参见官网
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_DATABASE: 'Spring'
+      MYSQL_USER: 'remotes'
+      MYSQL_PASSWORD: '123456'
+    ports:
+      - "3306:3306"
+    volumes:
+      - /local/compose/mysql/log:/var/log/mysql
+      - /local/compose/mysql/data:/var/lib/mysql
+      - /local/compose/mysql/conf:/etc/mysql/conf.d
+    networks:
+      - compose-net
+    command: --default-authentication-plugin=mysql_native_password #解决外部无法访问问题
+
+# 网络配置
+networks:
+  # 启动时会自动加linux前缀，如在compose目录下，那么网络名称为compose_compose-net
+  compose-net:

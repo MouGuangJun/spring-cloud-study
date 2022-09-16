@@ -37,6 +37,7 @@
         <module>cloud-stream-rabbitmq-consumer-3003</module>
         <module>cloud-sleuth-server-1101</module>
         <module>cloud-sleuth-client-1102</module>
+        <module>docker-compose-server</module>
     </modules>
     <!--父工程用pom的方式打包-->
     <packaging>pom</packaging>

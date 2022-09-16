@@ -1,0 +1,28 @@
+server:
+  port: 9099
+
+spring:
+  application:
+    name: docker-compose-server #入驻到zookeeper中的名字
+
+
+  ####### 需要将127.0.0.1地址改为docker容器所在的宿主机地址 #######
+  datasource:
+    # mysql驱动包
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/Spring?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+
+  # redis相关配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+    timeout: 1000
